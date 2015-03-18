@@ -1,0 +1,18 @@
+{% extends "cheddar/base.html" %}
+{% block content %}
+Welcome,
+{% if user.last_name %}
+ {{ user.first_name }} {{ user.last_name }}
+{% else %}
+ {{ user.username }}
+{% endif %}
+<p>
+{% if tracks %}
+You are an admin for the following tracks:<p>
+{% for track in tracks %}
+<a href="/cheddar/{{track.id}}">{{track.name}}</a><p>
+{% endfor %}
+{% else %}
+You are not (yet) a track admin.
+{% endif %}
+{% endblock %}

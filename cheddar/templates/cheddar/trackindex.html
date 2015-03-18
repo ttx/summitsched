@@ -1,0 +1,18 @@
+{% extends "cheddar/base.html" %}
+{% block content %}
+<ul class="list-group">
+  <li class="list-group-item disabled"><h4>{{ trackname }} track</h4></li>
+{% for session in session_list %}
+{% ifchanged %}
+</ul>
+<ul class="list-group">
+ <li class="list-group-item disabled">{{ session.event_start|slice:":10" }}</li>
+{% endifchanged %}
+<li class="list-group-item">{{ session.event_start|slice:"-8:-3" }} -
+    {{ session.event_end|slice:"-8:-3" }}
+    &nbsp;&nbsp;{{ session.name }}</li>
+{% endfor %}
+</ul>
+
+
+{% endblock %}

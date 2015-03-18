@@ -1,0 +1,9 @@
+{
+    "sched": {
+        "url": "kilodesignsummit.sched.org",
+        "api_key": "9707337b8d65435aa970a148f6738344"
+    },
+    "tracks": {
+        "Nova": ["ttx"]
+    }
+}

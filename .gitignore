@@ -1,0 +1,7 @@
+*.pyc
+*.swo
+*.swp
+*.sqlite3
+*.db
+*~
+local_settings.py
