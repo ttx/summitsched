@@ -75,5 +75,9 @@
 <input class="btn btn-primary" type="submit" value="Modify" />
 <a class="btn btn-info" href="/cheddar/{{ trackid }}">Cancel</a>
 </div>
+<button type="button" class="btn btn-sm btn-danger"
+onClick="window.open('{{viewprefix}}/event/{{session.id}}', '_blank')">
+  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> View in sched
+</button>
 </form>
 {% endblock %}

@@ -3,6 +3,7 @@ from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.defaults import page_not_found
+from django.conf import settings
 from cheddar.sched import list_sessions, get_session, modify_session
 from cheddar.session import session_to_form, form_to_session
 from cheddar.tracklead import get_trackname, get_tracks, is_tracklead
@@ -27,6 +28,7 @@ def index(request):
 def trackindex(request, trackid):
     return cheddar_render(request,
                           'cheddar/trackindex.html',
+                          viewprefix="http://%s" % settings.SCHED_SITE,
                           trackname=get_trackname(trackid),
                           trackid=int(trackid),
                           session_list=list_sessions(trackid))
@@ -40,6 +42,7 @@ def editsession(request, trackid, sessionkey):
         return page_not_found(request)
     return cheddar_render(request,
                           'cheddar/editsession.html',
+                          viewprefix="http://%s" % settings.SCHED_SITE,
                           trackname=get_trackname(trackid),
                           trackid=int(trackid),
                           session=session_to_form(trackid, sessionkey, session))
