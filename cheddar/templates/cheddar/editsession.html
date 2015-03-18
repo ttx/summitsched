@@ -1,0 +1,37 @@
+{% extends "cheddar/base.html" %}
+{% block content %}
+<form class="form" action="/cheddar/{{trackid}}/edit/{{session.event_key}}"
+      method="POST">
+{% csrf_token %}
+<div class="form-group">
+<label>Title</label>
+<div class="input-group input-group-lg">
+  <span class="input-group-addon" id="basic-addon1">{{ trackname }}:</span>
+  <input type="text" class="form-control" name="title" value="{{ session.name }}"
+   aria-describedby="basic-addon1">
+</div>
+</div>
+<div class="form-group">
+<ul class="list-group">
+ <li class="list-group-item">
+<span class="glyphicon glyphicon-time"</span>
+{{ session.event_start|slice:":10" }},
+{{ session.event_start|slice:"-8:-3" }}-{{ session.event_end|slice:"-8:-3" }}
+ </li>
+ <li class="list-group-item">
+<span class="glyphicon glyphicon-home"</span>
+{{ session.venue }}
+ </li>
+</ul>
+</div>
+<div class="form-group">
+<label>Description <small>(may use &lt;a&gt; for links)</small></label>
+  <textarea rows=10 name="description" class="form-control"
+   aria-describedby="basic-addon2">{{ session.description}}</textarea>
+</div>
+<div class="form-group">
+<input class="btn btn-primary" type="submit" value="Modify" />
+<a class="btn btn-info" href="/cheddar/{{ trackid }}">Cancel</a>
+</div>
+</form>
+{% endblock %}

@@ -16,9 +16,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1fbn!m5gn)cikb-uy-uxwk+=wn%&x-g99yuxxlh4$5p9s!6&6w'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -109,3 +106,9 @@ OPENID_SSO_SERVER_URL = 'https://login.launchpad.net/'
 # Tell django.contrib.auth to use the OpenID signin URLs.
 LOGIN_URL = '/openid/login'
 LOGIN_REDIRECT_URL = '/'
+
+# Override settings with local ones.
+try:
+    from local_settings import *
+except ImportError:
+    pass

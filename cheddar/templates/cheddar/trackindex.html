@@ -8,9 +8,9 @@
 <ul class="list-group">
  <li class="list-group-item disabled">{{ session.event_start|slice:":10" }}</li>
 {% endifchanged %}
-<li class="list-group-item">{{ session.event_start|slice:"-8:-3" }} -
-    {{ session.event_end|slice:"-8:-3" }}
-    &nbsp;&nbsp;{{ session.name }}</li>
+<a href="/cheddar/{{trackid}}/{{ session.event_key }}" class="list-group-item">
+{{ session.event_start|slice:"-8:-3" }} - {{ session.event_end|slice:"-8:-3" }}
+&nbsp;&nbsp;{{ session.name }}</a>
 {% endfor %}
 </ul>
 
