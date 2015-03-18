@@ -7,7 +7,7 @@
 <label>Title</label>
 <div class="input-group input-group-lg">
   <span class="input-group-addon" id="basic-addon1">{{ trackname }}:</span>
-  <input type="text" class="form-control" name="title" value="{{ session.name }}"
+  <input type="text" class="form-control" name="name" value="{{ session.name }}"
    aria-describedby="basic-addon1">
 </div>
 </div>
@@ -24,11 +24,13 @@
  </li>
 </ul>
 </div>
+{% if session.sessiontype == 'FISHBOWL' %}
 <div class="form-group">
 <label>Description <small>(may use &lt;a&gt; for links)</small></label>
   <textarea rows=10 name="description" class="form-control"
    aria-describedby="basic-addon2">{{ session.description}}</textarea>
 </div>
+{% endif %}
 <div class="form-group">
 <input class="btn btn-primary" type="submit" value="Modify" />
 <a class="btn btn-info" href="/cheddar/{{ trackid }}">Cancel</a>

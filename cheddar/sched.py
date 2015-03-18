@@ -32,6 +32,6 @@ def modify_session(sessionkey, session):
     old_session = get_session(sessionkey)
     call_sched('session/mod',
                session_key=sessionkey,
-               name=session['title'],
+               name=session['name'],
                description=session['description'],
                venue=old_session['venue'])

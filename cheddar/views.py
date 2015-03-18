@@ -42,11 +42,11 @@ def editsession(request, trackid, sessionkey):
                           'cheddar/editsession.html',
                           trackname=get_trackname(trackid),
                           trackid=int(trackid),
-                          session=session_to_form(session))
+                          session=session_to_form(trackid, sessionkey, session))
 
 
 def modifysession(request, trackid, sessionkey):
-    session = form_to_session(request.POST)
+    session = form_to_session(trackid, sessionkey, request.POST)
     modify_session(sessionkey, session)
     return HttpResponseRedirect('/cheddar/%s' % trackid)
 
