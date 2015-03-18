@@ -52,8 +52,13 @@
 {% endif %}
 {% if session.sessiontype == 'MEETUP' %}
 <div class="form-group">
+<label>Description</label>
+  <textarea readonly rows=3 name="description" class="form-control"
+   aria-describedby="basic-addon2">{{ session.description|striptags}}</textarea>
+</div>
+<div class="form-group">
   <label>Meetup etherpad URL</label>
-  <input type="text" class="form-control" name="description" value="{{ session.description}}">
+  <input type="text" class="form-control" name="urllink" value="{{ session.urllink}}">
 </div>
 {% endif %}
 <div class="form-group">
