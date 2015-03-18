@@ -6,13 +6,24 @@
 {% ifchanged %}
 </ul>
 <ul class="list-group">
- <li class="list-group-item disabled">{{ session.event_start|slice:":10" }}</li>
+ <li class="list-group-item disabled">
+<span class="glyphicon glyphicon-calendar"></span>
+{{ session.event_start|slice:":10" }}</li>
 {% endifchanged %}
 <a href="/cheddar/{{trackid}}/{{ session.event_key }}" class="list-group-item">
 {{ session.event_start|slice:"-8:-3" }} - {{ session.event_end|slice:"-8:-3" }}
+&nbsp;
+{% if session.sessiontype == 'FISHBOWL' %}
+<span class="label label-primary">Fishbowl</span>
+{% endif %}
+{% if session.sessiontype == 'WORKROOM' %}
+<span class="label label-info">Workroom</span>
+{% endif %}
+{% if session.sessiontype == 'MEETUP' %}
+<span class="label label-success">Meetup</span>
+{% endif %}
 &nbsp;&nbsp;{{ session.name }}</a>
 {% endfor %}
 </ul>
-
 
 {% endblock %}

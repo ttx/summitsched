@@ -1,6 +1,7 @@
 from django.conf import settings
 import requests
 from cheddar.models import Track
+from cheddar.session import session_type
 
 def call_sched(operation, **payload):
     schedsite = "http://%s/api" % settings.SCHED_SITE
@@ -12,17 +13,21 @@ def call_sched(operation, **payload):
     else:
         return {}
 
+def all_sessions():
+    complete_list = call_sched('session/list')
+    for session in complete_list:
+        session['sessiontype'] = session_type(session['event_key'])
+    return complete_list
+
 def list_sessions(trackid):
     t = Track.objects.get(id=trackid)
-    unfiltered_list = call_sched('session/list')
     # TODO: this should use session prefix instead (to support
     # multiple event types)
-    filtered = [a for a in unfiltered_list if a.get('event_type') == t.name]
+    filtered = [a for a in all_sessions() if a.get('event_type') == t.name]
     return sorted(filtered, key=lambda x: x['event_start'])
 
 def get_session(sessionkey):
-    unfiltered_list = call_sched('session/list')
-    for session in unfiltered_list:
+    for session in all_sessions():
         if session['event_key'] == sessionkey:
             return session
     raise IndexError

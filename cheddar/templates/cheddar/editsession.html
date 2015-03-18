@@ -5,11 +5,18 @@
 {% csrf_token %}
 <div class="form-group">
 <label>Title</label>
+{% if session.sessiontype == 'FISHBOWL' %}
 <div class="input-group input-group-lg">
   <span class="input-group-addon" id="basic-addon1">{{ trackname }}:</span>
   <input type="text" class="form-control" name="name" value="{{ session.name }}"
    aria-describedby="basic-addon1">
 </div>
+{% endif %}
+{% if session.sessiontype == 'MEETUP' %}
+<div class="form-group">
+  <input readonly type="text" class="form-control input-lg" name="name" value="{{ session.name }}">
+</div>
+{% endif %}
 </div>
 <div class="form-group">
 <ul class="list-group">
@@ -17,6 +24,18 @@
 <span class="glyphicon glyphicon-time"</span>
 {{ session.event_start|slice:":10" }},
 {{ session.event_start|slice:"-8:-3" }}-{{ session.event_end|slice:"-8:-3" }}
+ </li>
+ <li class="list-group-item">
+<span class="glyphicon glyphicon-blackboard"</span>
+{% if session.sessiontype == 'FISHBOWL' %}
+<span class="label label-primary">Fishbowl</span>
+{% endif %}
+{% if session.sessiontype == 'WORKROOM' %}
+<span class="label label-info">Workroom</span>
+{% endif %}
+{% if session.sessiontype == 'MEETUP' %}
+<span class="label label-success">Meetup</span>
+{% endif %}
  </li>
  <li class="list-group-item">
 <span class="glyphicon glyphicon-home"</span>
@@ -29,6 +48,12 @@
 <label>Description <small>(may use &lt;a&gt; for links)</small></label>
   <textarea rows=10 name="description" class="form-control"
    aria-describedby="basic-addon2">{{ session.description}}</textarea>
+</div>
+{% endif %}
+{% if session.sessiontype == 'MEETUP' %}
+<div class="form-group">
+  <label>Meetup etherpad URL</label>
+  <input type="text" class="form-control" name="description" value="{{ session.description}}">
 </div>
 {% endif %}
 <div class="form-group">

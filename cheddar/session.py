@@ -9,15 +9,13 @@ def session_type(sessionkey):
         return 'FISHBOWL'
     if sessionkey.startswith("slot-"):
         return 'WORKROOM'
-    if sessionkey.startswith("slot-"):
-        return 'MEETUP'
+    return 'MEETUP'
 
 
 def session_to_form(trackid, sessionkey, session):
     form = session.copy()
     form['description'] = form['description'].replace('<br />','\n')
     trackname = get_trackname(trackid)
-    form['sessiontype'] = session_type(sessionkey)
 
     # Fishbowls keep their name, trackname is mandatory
     if form['sessiontype'] == 'FISHBOWL':
