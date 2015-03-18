@@ -1,6 +1,9 @@
 from cheddar.tracklead import get_trackname
 
 WORKROOM_TITLE = "%s: Work session"
+WORKROOM_DESCRIPTION = "Work sessions are for %s contributors to discuss implementation details and making quick progress over specific issues, in a small work group environment.\n"
+WORKROOM_LINK = "\nClick <a href='%s'>here</a> for details on this work room agenda."
+
 MEETUP_TITLE = "%s contributors meetup"
 MEETUP_DESCRIPTION = "The %s contributors meetup is a informal gathering of the project contributors, with an open agenda.\n"
 MEETUP_LINK = "\nClick <a href='%s'>here</a> for details on the meetup agenda."
@@ -10,8 +13,8 @@ def session_type(sessionkey):
     if sessionkey.startswith("slot-"):
         return 'FISHBOWL'
     if sessionkey.startswith("slot-"):
-        return 'WORKROOM'
-    return 'MEETUP'
+        return 'MEETUP'
+    return 'WORKROOM'
 
 
 def session_to_form(trackid, sessionkey, session):
@@ -23,11 +26,12 @@ def session_to_form(trackid, sessionkey, session):
     if form['sessiontype'] == 'FISHBOWL':
         if form['name'].startswith(trackname+": "):
             form['name'] = form['name'][len(trackname+": "):]
-    # Workrooms & meetups have a mandatory name
-    if form['sessiontype'] == 'WORKROOM':
-        form['name'] = WORKROOM_TITLE % trackname
-    if form['sessiontype'] == 'MEETUP':
-        form['name'] = MEETUP_TITLE % trackname
+    else:
+        # Workrooms & meetups have a mandatory name
+        if form['sessiontype'] == 'WORKROOM':
+            form['name'] = WORKROOM_TITLE % trackname
+        if form['sessiontype'] == 'MEETUP':
+            form['name'] = MEETUP_TITLE % trackname
         start = session['description'].find("<a href='")
         end = session['description'].find("here</a>")
         if start != -1 and end != -1:
@@ -51,6 +55,9 @@ def form_to_session(trackid, sessionkey, formdata):
     # Workrooms & meetups have a mandatory name and description
     if session_type(sessionkey) == 'WORKROOM':
         session['name'] = WORKROOM_TITLE % trackname
+        session['description'] = WORKROOM_DESCRIPTION % trackname
+        if formdata['urllink']:
+            session['description'] += WORKROOM_LINK % formdata['urllink']
 
     if session_type(sessionkey) == 'MEETUP':
         session['name'] = MEETUP_TITLE % trackname
