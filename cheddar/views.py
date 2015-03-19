@@ -34,7 +34,7 @@ def cheddar_render(request, template, **kwargs):
 def index(request):
     tracks = get_tracks(request.user.username)
     if tracks:
-       return trackindex(request, tracks[0].id)
+        return trackindex(request, tracks[0].id)
     return cheddar_render(request, 'cheddar/notrack.html')
 
 
@@ -48,6 +48,7 @@ def trackindex(request, trackid):
                           trackid=int(trackid),
                           session_list=list_sessions(trackid))
 
+
 @login_required
 @is_tracklead
 def editsession(request, trackid, sessionkey):
@@ -55,12 +56,13 @@ def editsession(request, trackid, sessionkey):
         session = get_session(sessionkey)
     except IndexError:
         return page_not_found(request)
-    return cheddar_render(request,
-                          'cheddar/editsession.html',
-                          viewprefix="http://%s" % settings.SCHED_SITE,
-                          trackname=get_trackname(trackid),
-                          trackid=int(trackid),
-                          session=session_to_form(trackid, sessionkey, session))
+    return cheddar_render(
+        request,
+        'cheddar/editsession.html',
+        viewprefix="http://%s" % settings.SCHED_SITE,
+        trackname=get_trackname(trackid),
+        trackid=int(trackid),
+        session=session_to_form(trackid, sessionkey, session))
 
 
 def modifysession(request, trackid, sessionkey):
@@ -68,8 +70,10 @@ def modifysession(request, trackid, sessionkey):
     modify_session(sessionkey, session)
     return HttpResponseRedirect('/cheddar/%s' % trackid)
 
+
 def loggedout(request):
     return cheddar_render(request, 'cheddar/loggedout.html')
+
 
 def dologout(request):
     logout(request)

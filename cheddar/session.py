@@ -16,12 +16,19 @@
 from cheddar.tracklead import get_trackname
 
 WORKROOM_TITLE = "%s: Work session"
-WORKROOM_DESCRIPTION = "Work sessions are for %s contributors to discuss implementation details and making quick progress over specific issues, in a small work group environment.\n"
-WORKROOM_LINK = "\nClick <a href='%s'>here</a> for details on this work room agenda."
+WORKROOM_DESCRIPTION = (
+    "Work sessions are for %s contributors to discuss implementation details "
+    "and making quick progress over specific issues, "
+    "in a small work group environment.\n")
+WORKROOM_LINK = (
+    "\nClick <a href='%s'>here</a> for details on this work room agenda.")
 
 MEETUP_TITLE = "%s contributors meetup"
-MEETUP_DESCRIPTION = "The %s contributors meetup is a informal gathering of the project contributors, with an open agenda.\n"
-MEETUP_LINK = "\nClick <a href='%s'>here</a> for details on the meetup agenda."
+MEETUP_DESCRIPTION = (
+    "The %s contributors meetup is a informal gathering of "
+    "the project contributors, with an open agenda.\n")
+MEETUP_LINK = (
+    "\nClick <a href='%s'>here</a> for details on the meetup agenda.")
 
 
 def session_type(sessionkey):
@@ -34,7 +41,7 @@ def session_type(sessionkey):
 
 def session_to_form(trackid, sessionkey, session):
     form = session.copy()
-    form['description'] = form['description'].replace('<br />','\n')
+    form['description'] = form['description'].replace('<br />', '\n')
     trackname = get_trackname(trackid)
 
     # Fishbowls keep their name, trackname is mandatory
@@ -65,7 +72,7 @@ def form_to_session(trackid, sessionkey, formdata):
     # Fishbowl can specify a name
     if session_type(sessionkey) == 'FISHBOWL':
         if not session['name'].startswith(trackname+": "):
-            session['name'] = trackname+": "+ session['name']
+            session['name'] = trackname + ": " + session['name']
 
     # Workrooms & meetups have a mandatory name and description
     if session_type(sessionkey) == 'WORKROOM':
@@ -80,5 +87,5 @@ def form_to_session(trackid, sessionkey, formdata):
         if formdata['urllink']:
             session['description'] += MEETUP_LINK % formdata['urllink']
 
-    session['description'] = session['description'].replace('\n','<br />')
+    session['description'] = session['description'].replace('\n', '<br />')
     return session
