@@ -1,4 +1,4 @@
-# Copyright 2011 Thierry Carrez <thierry@openstack.org>
+# Copyright 2015 Thierry Carrez <thierry@openstack.org>
 # All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
