@@ -1,6 +1,7 @@
 {
     "tracks": {
-        "Nova": ["ttx"]
+        "Nova": ["ttx"],
+        "Swift": ["ttx", "notmyname"]
     },
     "rooms": [
         {
@@ -10,7 +11,7 @@
                 "2015-05-19": [
                     { "time": "11:15", "track": "Nova" },
                     { "time": "12:05", "track": "Nova" },
-                    { "time": "14:00", "track": "" },
+                    { "time": "14:00", "track": "Swift" },
                     { "time": "14:50", "track": "" },
                     { "time": "15:40", "track": "" },
                     { "time": "16:40", "track": "" },
@@ -46,7 +47,7 @@
             "days": {
                 "2015-05-22": [
                     { "time": "09:00", "track": "Nova" },
-                    { "time": "13:20", "track": "" }
+                    { "time": "13:20", "track": "Swift" }
                 ]
             }
         }
