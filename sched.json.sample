@@ -1,9 +1,54 @@
 {
-    "sched": {
-        "url": "kilodesignsummit.sched.org",
-        "api_key": "9707337b8d65435aa970a148f6738344"
-    },
     "tracks": {
         "Nova": ["ttx"]
-    }
+    },
+    "rooms": [
+        {
+            "name": "Room 212",
+            "style": "Fish",
+            "days": {
+                "2015-05-19": [
+                    { "time": "11:15", "track": "Nova" },
+                    { "time": "12:05", "track": "Nova" },
+                    { "time": "14:00", "track": "" },
+                    { "time": "14:50", "track": "" },
+                    { "time": "15:40", "track": "" },
+                    { "time": "16:40", "track": "" },
+                    { "time": "17:30", "track": "" }
+                ],
+                "2015-05-20": [
+                    { "time": "09:00", "track": "" },
+                    { "time": "09:50", "track": "" },
+                    { "time": "11:00", "track": "" },
+                    { "time": "11:50", "track": "" },
+                    { "time": "13:50", "track": "" },
+                    { "time": "14:40", "track": "" },
+                    { "time": "15:30", "track": "" },
+                    { "time": "16:30", "track": "" },
+                    { "time": "17:20", "track": "" }
+                ],
+                "2015-05-21": [
+                    { "time": "09:00", "track": "" },
+                    { "time": "09:50", "track": "" },
+                    { "time": "11:00", "track": "" },
+                    { "time": "11:50", "track": "" },
+                    { "time": "13:30", "track": "" },
+                    { "time": "14:20", "track": "" },
+                    { "time": "15:10", "track": "" },
+                    { "time": "16:10", "track": "" },
+                    { "time": "17:00", "track": "" }
+                ]
+            }
+        },
+        {
+            "name": "Room 212A",
+            "style": "Meet",
+            "days": {
+                "2015-05-22": [
+                    { "time": "09:00", "track": "Nova" },
+                    { "time": "13:20", "track": "" }
+                ]
+            }
+        }
+    ]
 }

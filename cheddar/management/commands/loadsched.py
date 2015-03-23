@@ -14,9 +14,18 @@
 #    under the License.
 
 import json
+import datetime
 
 from django.core.management.base import BaseCommand, CommandError
-from cheddar.models import Sched, Track, Tracklead
+from cheddar.models import Track, Tracklead
+from cheddar import session
+from cheddar.sched import create_session
+
+
+def _endtime(start_time, duration):
+    start = datetime.datetime.strptime(start_time, "%H:%M")
+    end = start + datetime.timedelta(minutes=duration)
+    return end.strftime("%H:%M")
 
 
 class Command(BaseCommand):
@@ -34,13 +43,40 @@ class Command(BaseCommand):
         except ValueError as exc:
             raise CommandError("Malformed JSON: %s" % exc.message)
 
-        e = Sched(url=data['sched']['url'],
-                  api_key=data['sched']['api_key'])
-        e.save()
-
         for track, leads in data['tracks'].iteritems():
             t = Track(name=track)
             t.save()
             for lead in leads:
                 l = Tracklead(track=t, user=lead)
                 l.save()
+
+        index = 0
+        for room in data['rooms']:
+            for day, slots in room['days'].iteritems():
+                for slot in slots:
+                    if not slot['track']:
+                        continue
+                    index = index + 1
+                    key = "%s-%s-%d" % (room['style'], slot['track'], index)
+                    if room['style'] == 'Fish':
+                        duration = 40
+                        title = "%s: tbd" % slot['track']
+                        desc = "tbd"
+                    if room['style'] == 'Work':
+                        duration = 40
+                        title = session.WORKROOM_TITLE % slot['track']
+                        desc = session.WORKROOM_DESCRIPTION % slot['track']
+                    if room['style'] == 'Meet':
+                        duration = 200
+                        title = session.MEETUP_TITLE % slot['track']
+                        desc = session.MEETUP_DESCRIPTION % slot['track']
+                    create_session(
+                        key,
+                        day,
+                        slot['time'],
+                        _endtime(slot['time'], duration),
+                        title,
+                        desc,
+                        slot['track'],
+                        room['name']
+                    )

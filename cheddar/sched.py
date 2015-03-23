@@ -61,3 +61,15 @@ def modify_session(sessionkey, session):
                session_subtype=session['tracks'],
                description=session['description'],
                venue=old_session['venue'])
+
+
+def create_session(key, day, starttime, endtime, title, desc, track, room):
+    call_sched('session/add',
+               session_key=key,
+               name=title,
+               session_start=day + " " + starttime,
+               session_end=day + " " + endtime,
+               session_type="Design Summit",
+               session_subtype=track,
+               description=desc,
+               venue=room)
