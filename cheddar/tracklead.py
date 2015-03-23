@@ -35,3 +35,7 @@ def is_tracklead(func):
             raise PermissionDenied
         return func(*args, **kwargs)
     return wrapper
+
+def is_valid_track(trackname):
+    tracks = Track.objects.filter(name=trackname)
+    return len(tracks) == 1

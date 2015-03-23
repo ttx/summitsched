@@ -42,6 +42,10 @@
  </li>
 </ul>
 </div>
+<div class="form-group">
+  <label>Also appears in... <small>(comma-separated list of track names)</small></label>
+  <input type="text" class="form-control" name="tracks" value="{{ session.event_subtype}}">
+</div>
 {% if session.sessiontype == 'FISHBOWL' %}
 <div class="form-group">
 <label>Description <small>(may use &lt;a&gt; for links)</small></label>

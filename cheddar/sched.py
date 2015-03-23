@@ -58,5 +58,6 @@ def modify_session(sessionkey, session):
     call_sched('session/mod',
                session_key=sessionkey,
                name=session['name'],
+               session_subtype=session['tracks'],
                description=session['description'],
                venue=old_session['venue'])

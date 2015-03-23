@@ -13,7 +13,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from cheddar.tracklead import get_trackname
+from cheddar.tracklead import get_trackname, is_valid_track
 
 WORKROOM_TITLE = "%s: Work session"
 WORKROOM_DESCRIPTION = (
@@ -48,6 +48,9 @@ def session_to_form(trackid, sessionkey, session):
     form['description'] = form['description'].replace('<br />', '\n')
     trackname = get_trackname(trackid)
 
+    form['event_subtype'] = form['event_subtype'].replace(trackname,"")
+    form['event_subtype'] = form['event_subtype'].strip(" ,")
+
     # Fishbowls keep their name, trackname is mandatory
     if form['sessiontype'] == 'FISHBOWL':
         if form['name'].startswith(trackname+": "):
@@ -72,6 +75,12 @@ def form_to_session(trackid, sessionkey, formdata):
 
     session = formdata.copy()
     trackname = get_trackname(trackid)
+
+    session['tracks'] = trackname
+    for track in formdata['tracks'].split(","):
+        track = track.strip().capitalize()
+        if is_valid_track(track):
+            session['tracks'] = "%s, %s" % (session['tracks'], track)
 
     # Fishbowl can specify a name
     if session_type(sessionkey) == 'FISHBOWL':
