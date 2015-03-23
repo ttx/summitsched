@@ -32,11 +32,15 @@ MEETUP_LINK = (
 
 
 def session_type(sessionkey):
-    if sessionkey.startswith("slot-"):
+    if sessionkey.startswith("Fish-"):
         return 'FISHBOWL'
-    if sessionkey.startswith("slot-"):
+    if sessionkey.startswith("Meet-"):
         return 'MEETUP'
     return 'WORKROOM'
+
+
+def session_track(sessionkey):
+    return sessionkey.split("-")[1]
 
 
 def session_to_form(trackid, sessionkey, session):

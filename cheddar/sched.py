@@ -16,7 +16,7 @@
 from django.conf import settings
 import requests
 from cheddar.models import Track
-from cheddar.session import session_type
+from cheddar.session import session_type, session_track
 
 
 def call_sched(operation, **payload):
@@ -39,9 +39,9 @@ def all_sessions():
 
 def list_sessions(trackid):
     t = Track.objects.get(id=trackid)
-    # TODO: this should use session prefix instead (to support
-    # multiple event types)
-    filtered = [a for a in all_sessions() if a.get('event_type') == t.name]
+    def track_match(a):
+        return session_track(a.get('event_key')) == t.name
+    filtered = filter(track_match, all_sessions())
     return sorted(filtered, key=lambda x: x['event_start'])
 
 
