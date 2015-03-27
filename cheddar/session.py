@@ -40,7 +40,10 @@ def session_type(sessionkey):
 
 
 def session_track(sessionkey):
-    return sessionkey.split("-")[1]
+    elements = sessionkey.split("-")
+    if len(elements) < 2:
+        return ""
+    return elements[1]
 
 
 def session_to_form(trackid, sessionkey, session):
