@@ -28,6 +28,10 @@ def get_tracks(leadname):
     return [t.track for t in trackleads]
 
 
+def extra_tracks(trackid):
+    return Track.objects.exclude(id=trackid)
+
+
 def is_tracklead(func):
     def wrapper(*args, **kwargs):
         track = get_object_or_404(Track, id=args[1])

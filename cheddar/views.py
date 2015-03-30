@@ -22,6 +22,7 @@ from django.conf import settings
 from cheddar.sched import list_sessions, get_session, modify_session
 from cheddar.session import session_to_form, form_to_session
 from cheddar.tracklead import get_trackname, get_tracks, is_tracklead
+from cheddar.tracklead import extra_tracks
 
 
 def cheddar_render(request, template, **kwargs):
@@ -62,6 +63,7 @@ def editsession(request, trackid, sessionkey):
         viewprefix="http://%s" % settings.SCHED_SITE,
         trackname=get_trackname(trackid),
         trackid=int(trackid),
+        extratracks=extra_tracks(int(trackid)),
         session=session_to_form(trackid, sessionkey, session))
 
 
