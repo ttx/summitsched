@@ -1,4 +1,5 @@
 {% extends "cheddar/base.html" %}
+{% load trackextras %}
 {% block content %}
 <ul class="list-group">
   <li class="list-group-item disabled"><h4>{{ trackname }} track</h4></li>
@@ -23,7 +24,13 @@
 {% if session.sessiontype == 'MEETUP' %}
 <span class="label label-success">Meetup</span>
 {% endif %}
-&nbsp;&nbsp;{{ session.name }}</a>
+&nbsp;&nbsp;{{ session.name }}
+{% for track in session.event_subtype|split_tracks %}
+{% if track != trackname %}
+<span class="badge">{{ track }}</span>
+{% endif %}
+{% endfor %}
+</a>
 {% endfor %}
 </ul>
 <button type="button" class="btn btn-danger"
