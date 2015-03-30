@@ -12,6 +12,7 @@
 {% endifchanged %}
 <a href="/cheddar/{{trackid}}/{{ session.event_key }}" class="list-group-item">
 {{ session.event_start|slice:"-8:-3" }} - {{ session.event_end|slice:"-8:-3" }}
+&nbsp;&nbsp;({{ session.venue }})
 &nbsp;
 {% if session.sessiontype == 'FISHBOWL' %}
 <span class="label label-primary">Fishbowl</span>
