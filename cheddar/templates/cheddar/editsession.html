@@ -46,25 +46,15 @@
   <label>Also appears in... <small>(comma-separated list of track names)</small></label>
   <input id="extratracks" type="text" class="form-control" name="tracks" value="{{ session.event_subtype}}">
 </div>
-{% if session.sessiontype == 'FISHBOWL' %}
+{% if session.sessiontype != 'MEETUP' %}
 <div class="form-group">
-<label>Description <small>(may use &lt;a&gt; for links)</small></label>
+<label>
+{% if session.sessiontype == 'WORKROOM' %}Boring {% endif %}
+Description <small>(may use &lt;a&gt; for links)</small></label>
   <textarea rows=10 name="description" class="form-control"
    aria-describedby="basic-addon2">{{ session.description}}</textarea>
 </div>
-{% endif %}
-{% if session.sessiontype == 'WORKROOM' %}
-<div class="form-group">
-<label>Description</label>
-  <textarea readonly rows=4 name="description" class="form-control"
-   aria-describedby="basic-addon2">{{ session.description|striptags}}</textarea>
-</div>
-<div class="form-group">
-  <label>Workroom etherpad URL</label>
-  <input type="text" class="form-control" name="urllink" value="{{ session.urllink}}">
-</div>
-{% endif %}
-{% if session.sessiontype == 'MEETUP' %}
+{% else %}
 <div class="form-group">
 <label>Description</label>
   <textarea readonly rows=3 name="description" class="form-control"

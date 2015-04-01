@@ -64,12 +64,12 @@ def session_to_form(trackid, sessionkey, session):
             form['name'] = WORKROOM_TITLE % trackname
         if form['sessiontype'] == 'MEETUP':
             form['name'] = MEETUP_TITLE % trackname
-        start = session['description'].find("<a href='")
-        end = session['description'].find("here</a>")
-        if start != -1 and end != -1:
-            form['urllink'] = session['description'][start+9:end-2]
-        else:
-            form['urllink'] = ''
+            start = session['description'].find("<a href='")
+            end = session['description'].find("here</a>")
+            if start != -1 and end != -1:
+                form['urllink'] = session['description'][start+9:end-2]
+            else:
+                form['urllink'] = ''
 
     return form
 
@@ -90,13 +90,11 @@ def form_to_session(trackid, sessionkey, formdata):
         if not session['name'].startswith(trackname+": "):
             session['name'] = trackname + ": " + session['name']
 
-    # Workrooms & meetups have a mandatory name and description
+    # Workrooms have a mandatory name
     if session_type(sessionkey) == 'WORKROOM':
         session['name'] = WORKROOM_TITLE % trackname
-        session['description'] = WORKROOM_DESCRIPTION % trackname
-        if formdata['urllink']:
-            session['description'] += WORKROOM_LINK % formdata['urllink']
 
+    # Meetups have a mandatory name and description
     if session_type(sessionkey) == 'MEETUP':
         session['name'] = MEETUP_TITLE % trackname
         session['description'] = MEETUP_DESCRIPTION % trackname
