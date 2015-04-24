@@ -48,7 +48,12 @@ def session_track(sessionkey):
 
 def session_to_form(trackid, sessionkey, session):
     form = session.copy()
-    form['description'] = form['description'].replace('<br />', '\n')
+
+    try:
+        form['description'] = form['description'].replace('<br />', '\n')
+    except KeyError:
+        form['description'] = "tbd"
+
     trackname = get_trackname(trackid)
 
     form['event_subtype'] = form['event_subtype'].replace(trackname,"")
