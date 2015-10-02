@@ -67,7 +67,7 @@ class Command(BaseCommand):
                         title = session.WORKROOM_TITLE % slot['track']
                         desc = session.WORKROOM_DESCRIPTION % slot['track']
                     if room['style'] == 'Meet':
-                        duration = 200
+                        duration = 210
                         title = session.MEETUP_TITLE % slot['track']
                         desc = session.MEETUP_DESCRIPTION % slot['track']
                     create_session(
