@@ -25,7 +25,7 @@
 <span class="label label-success">Meetup</span>
 {% endif %}
 &nbsp;&nbsp;{{ session.name }}
-{% for track in session.event_subtype|split_tracks %}
+{% for track in session.event_type|split_tracks %}
 {% if track != trackname %}
 <span class="badge">{{ track }}</span>
 {% endif %}
@@ -34,7 +34,7 @@
 {% endfor %}
 </ul>
 <button type="button" class="btn btn-danger"
-onClick="window.open('{{viewprefix}}/type/design+summit/{{trackname}}', '_blank')">
+onClick="window.open('{{viewprefix}}/type/{{trackname}}', '_blank')">
   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> View in sched
 </button>
 <p>&nbsp;</p>

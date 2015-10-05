@@ -56,8 +56,8 @@ def session_to_form(trackid, sessionkey, session):
 
     trackname = get_trackname(trackid)
 
-    form['event_subtype'] = form['event_subtype'].replace(trackname,"")
-    form['event_subtype'] = form['event_subtype'].strip(" ,")
+    form['event_type'] = form['event_type'].replace(trackname,"")
+    form['event_type'] = form['event_type'].strip(" ,")
 
     # Fishbowls keep their name, trackname is mandatory
     if form['sessiontype'] == 'FISHBOWL':
