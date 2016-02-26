@@ -1,19 +1,19 @@
 {% extends "cheddar/base.html" %}
 {% block content %}
-<form class="form" action="/cheddar/{{trackid}}/edit/{{session.event_key}}"
+<form class="form" action="/cheddar/{{trackid}}/edit/{{session.id}}"
       method="POST">
 {% csrf_token %}
 <div class="form-group">
 <label>Title</label>
-{% if session.sessiontype == 'FISHBOWL' %}
+{% if session.style == 'FISHBOWL' %}
 <div class="input-group input-group-lg">
   <span class="input-group-addon" id="basic-addon1">{{ trackname }}:</span>
-  <input type="text" class="form-control" name="name" value="{{ session.name }}"
+  <input type="text" class="form-control" name="title" value="{{ session.title }}"
    aria-describedby="basic-addon1">
 </div>
 {% else %}
 <div class="form-group">
-  <input readonly type="text" class="form-control input-lg" name="name" value="{{ session.name }}">
+  <input readonly type="text" class="form-control input-lg" name="name" value="{{ session.title }}">
 </div>
 {% endif %}
 </div>
@@ -21,35 +21,35 @@
 <ul class="list-group">
  <li class="list-group-item">
 <span class="glyphicon glyphicon-time"</span>
-{{ session.event_start|slice:":10" }},
-{{ session.event_start|slice:"-8:-3" }}-{{ session.event_end|slice:"-8:-3" }}
+{{ session.start|slice:":10" }},
+{{ session.start|slice:"-8:-3" }}-{{ session.end|slice:"-8:-3" }}
  </li>
  <li class="list-group-item">
 <span class="glyphicon glyphicon-blackboard"</span>
-{% if session.sessiontype == 'FISHBOWL' %}
+{% if session.style == 'FISHBOWL' %}
 <span class="label label-primary">Fishbowl</span>
 {% endif %}
-{% if session.sessiontype == 'WORKROOM' %}
+{% if session.style == 'WORKROOM' %}
 <span class="label label-info">Workroom</span>
 {% endif %}
-{% if session.sessiontype == 'MEETUP' %}
+{% if session.style == 'MEETUP' %}
 <span class="label label-success">Meetup</span>
 {% endif %}
  </li>
  <li class="list-group-item">
 <span class="glyphicon glyphicon-home"</span>
-{{ session.venue }}
+{{ session.room }}
  </li>
 </ul>
 </div>
 <div class="form-group">
   <label>Also appears in... <small>(comma-separated list of track names)</small></label>
-  <input id="extratracks" type="text" class="form-control" name="tracks" value="{{ session.event_type}}">
+  <input id="extratracks" type="text" class="form-control" name="extratracks" value="{{ session.extratracks}}">
 </div>
-{% if session.sessiontype != 'MEETUP' %}
+{% if session.style != 'MEETUP' %}
 <div class="form-group">
 <label>
-{% if session.sessiontype == 'WORKROOM' %}Boring {% endif %}
+{% if session.style == 'WORKROOM' %}Boring {% endif %}
 Description <small>(may use &lt;a&gt; for links)</small></label>
   <textarea rows=10 name="description" class="form-control"
    aria-describedby="basic-addon2">{{ session.description}}</textarea>

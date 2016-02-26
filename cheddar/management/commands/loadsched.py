@@ -18,7 +18,7 @@ import datetime
 
 from django.core.management.base import BaseCommand, CommandError
 from cheddar.models import Track, Tracklead
-from cheddar import session
+from cheddar.session import Session
 from cheddar.sched import create_session
 
 
@@ -64,12 +64,12 @@ class Command(BaseCommand):
                         desc = "tbd"
                     if room['style'] == 'Work':
                         duration = 40
-                        title = session.WORKROOM_TITLE % slot['track']
-                        desc = session.WORKROOM_DESCRIPTION % slot['track']
+                        title = Session.WORKROOM_TITLE % slot['track']
+                        desc = Session.WORKROOM_DESCRIPTION % slot['track']
                     if room['style'] == 'Meet':
                         duration = 210
-                        title = session.MEETUP_TITLE % slot['track']
-                        desc = session.MEETUP_DESCRIPTION % slot['track']
+                        title = Session.MEETUP_TITLE % slot['track']
+                        desc = Session.MEETUP_DESCRIPTION % slot['track']
                     create_session(
                         key,
                         day,

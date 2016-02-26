@@ -9,23 +9,23 @@
 <ul class="list-group">
  <li class="list-group-item disabled">
 <span class="glyphicon glyphicon-calendar"></span>
-{{ session.event_start|slice:":10" }}</li>
+{{ session.start|slice:":10" }}</li>
 {% endifchanged %}
-<a href="/cheddar/{{trackid}}/{{ session.event_key }}" class="list-group-item">
-{{ session.event_start|slice:"-8:-3" }} - {{ session.event_end|slice:"-8:-3" }}
-&nbsp;&nbsp;({{ session.venue }})
+<a href="/cheddar/{{trackid}}/{{ session.id }}" class="list-group-item">
+{{ session.start|slice:"-8:-3" }} - {{ session.end|slice:"-8:-3" }}
+&nbsp;&nbsp;({{ session.room }})
 &nbsp;
-{% if session.sessiontype == 'FISHBOWL' %}
+{% if session.style == 'FISHBOWL' %}
 <span class="label label-primary">Fishbowl</span>
 {% endif %}
-{% if session.sessiontype == 'WORKROOM' %}
+{% if session.style == 'WORKROOM' %}
 <span class="label label-info">Workroom</span>
 {% endif %}
-{% if session.sessiontype == 'MEETUP' %}
+{% if session.style == 'MEETUP' %}
 <span class="label label-success">Meetup</span>
 {% endif %}
-&nbsp;&nbsp;{{ session.name }}
-{% for track in session.event_type|split_tracks %}
+&nbsp;&nbsp;{{ session.title}}
+{% for track in session.extratracks|split_tracks %}
 {% if track != trackname %}
 <span class="badge">{{ track }}</span>
 {% endif %}
