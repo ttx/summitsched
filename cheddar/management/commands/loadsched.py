@@ -19,7 +19,7 @@ import datetime
 from django.core.management.base import BaseCommand, CommandError
 from cheddar.models import Track, Tracklead
 from cheddar.session import Session
-from cheddar.sched import create_session
+from cheddar.api import load_api
 
 
 def _endtime(start_time, duration):
@@ -42,6 +42,8 @@ class Command(BaseCommand):
                 data = json.load(f)
         except ValueError as exc:
             raise CommandError("Malformed JSON: %s" % exc.message)
+
+        api = load_api()
 
         for track, leads in data['tracks'].iteritems():
             t = Track(name=track)
@@ -70,7 +72,7 @@ class Command(BaseCommand):
                         duration = 210
                         title = Session.MEETUP_TITLE % slot['track']
                         desc = Session.MEETUP_DESCRIPTION % slot['track']
-                    create_session(
+                    api.create_session(
                         key,
                         day,
                         slot['time'],
@@ -78,5 +80,6 @@ class Command(BaseCommand):
                         title,
                         desc,
                         slot['track'],
-                        room['name']
+                        room['name'],
+                        room['style']
                     )

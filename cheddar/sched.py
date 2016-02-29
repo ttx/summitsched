@@ -149,7 +149,7 @@ class API:
 
 
     def create_session(self, key, day, starttime, endtime, title,
-                       desc, track, room):
+                       desc, track, room, style):
         self._call_sched('session/add',
                          session_key=key,
                          name=title,
