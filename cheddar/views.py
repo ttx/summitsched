@@ -19,10 +19,12 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.defaults import page_not_found
 from django.conf import settings
-from cheddar.sched import list_sessions, get_session, modify_session
+from cheddar.api import load_api
 from cheddar.tracklead import get_trackname, get_tracks, is_tracklead
 from cheddar.tracklead import extra_tracks
 
+
+api = load_api()
 
 def cheddar_render(request, template, **kwargs):
     kwargs['user'] = request.user
@@ -46,14 +48,14 @@ def trackindex(request, trackid):
                           viewprefix="http://%s" % settings.SCHED_SITE,
                           trackname=get_trackname(trackid),
                           trackid=int(trackid),
-                          session_list=list_sessions(trackid))
+                          session_list=api.list_sessions(trackid))
 
 
 @login_required
 @is_tracklead
 def editsession(request, trackid, sessionkey):
     try:
-        session = get_session(sessionkey)
+        session = api.get_session(sessionkey)
     except IndexError:
         return page_not_found(request)
     return cheddar_render(
@@ -67,9 +69,9 @@ def editsession(request, trackid, sessionkey):
 
 
 def modifysession(request, trackid, sessionkey):
-    session = get_session(sessionkey)
+    session = api.get_session(sessionkey)
     session.modify_using_formdata(request.POST)
-    modify_session(sessionkey, session)
+    api.modify_session(sessionkey, session)
     return HttpResponseRedirect('/cheddar/%s' % trackid)
 
 

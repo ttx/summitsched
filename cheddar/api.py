@@ -1,6 +1,4 @@
-# Django settings for summitsched project.
-#
-# Copyright 2015 Thierry Carrez <thierry@openstack.org>
+# Copyright 2016 Thierry Carrez <thierry@openstack.org>
 # All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -15,18 +13,9 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-# Override application settings
-SECRET_KEY = 'generateRandomOneHere'
+from importlib import import_module
+from django.conf import settings
 
-# API module to use
-API_MODULE = "cheddar.sched"
-
-# API-specific parameters
-SCHED_SITE = 'kilodesignsummit.sched.org'
-SCHED_API_KEY = 'c1a3f10f367a3a418573fc8a10b7cdf5'
-
-# Run in production
-DEBUG = False
-ALLOWED_HOSTS = []
-TEMPLATE_DEBUG = DEBUG
-#OPENID_USE_AS_ADMIN_LOGIN = True
+def load_api():
+    klass = import_module(settings.API_MODULE)
+    return klass.API(settings)
