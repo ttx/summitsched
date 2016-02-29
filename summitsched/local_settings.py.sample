@@ -25,6 +25,16 @@ API_MODULE = "cheddar.sched"
 SCHED_SITE = 'kilodesignsummit.sched.org'
 SCHED_API_KEY = 'c1a3f10f367a3a418573fc8a10b7cdf5'
 
+# Summit API-specific parameters
+# SUM_CLIENTID = "wowsecrethere"
+# SUM_SECRET = "wowsecretheretoo"
+# SUM_TOKENURL = 'https://testopenstackid.openstack.org/oauth2/token'
+# SUM_RESOURCESRV = "https://testresource-server.openstack.org"
+# SUM_SUMMITID = "current"
+# SUM_EVENTIDS = { 'Fish': 1,
+#                  'Work': 2,
+#                  'Meet': 3 }
+
 # Run in production
 DEBUG = False
 ALLOWED_HOSTS = []
