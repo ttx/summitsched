@@ -146,7 +146,7 @@ class API:
                          'description': description})
 
 
-    def create_session(self, key, day, starttime, endtime, title,
+    def create_session(self, index, day, starttime, endtime, title,
                        desc, track, room, style):
         def _dt_to_timestamp(ds):
             dt = datetime.datetime.strptime(ds, "%Y-%m-%d %H:%M")

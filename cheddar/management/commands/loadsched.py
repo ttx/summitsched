@@ -59,21 +59,20 @@ class Command(BaseCommand):
                     if not slot['track']:
                         continue
                     index = index + 1
-                    key = "%s-%s-%d" % (room['style'], slot['track'], index)
-                    if room['style'] == 'Fish':
+                    if room['style'] == 'FISHBOWL':
                         duration = 40
                         title = "%s: tbd" % slot['track']
                         desc = "tbd"
-                    if room['style'] == 'Work':
+                    if room['style'] == 'WORKROOM':
                         duration = 40
                         title = Session.WORKROOM_TITLE % slot['track']
                         desc = Session.WORKROOM_DESCRIPTION % slot['track']
-                    if room['style'] == 'Meet':
+                    if room['style'] == 'MEETUP':
                         duration = 210
                         title = Session.MEETUP_TITLE % slot['track']
                         desc = Session.MEETUP_DESCRIPTION % slot['track']
                     api.create_session(
-                        key,
+                        index,
                         day,
                         slot['time'],
                         _endtime(slot['time'], duration),

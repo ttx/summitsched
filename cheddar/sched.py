@@ -109,8 +109,9 @@ class API:
                          venue=old_session.room)
 
 
-    def create_session(self, key, day, starttime, endtime, title,
+    def create_session(self, index, day, starttime, endtime, title,
                        desc, track, room, style):
+        key = "%s-%s-%d" % (style.lower().capitalize()[0:4], track, index)
         self._call_sched('session/add',
                          session_key=key,
                          name=title,

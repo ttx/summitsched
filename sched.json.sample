@@ -6,7 +6,7 @@
     "rooms": [
         {
             "name": "Room 212",
-            "style": "Fish",
+            "style": "FISHBOWL",
             "days": {
                 "2015-05-19": [
                     { "time": "11:15", "track": "Nova" },
@@ -43,7 +43,7 @@
         },
         {
             "name": "Room 212A",
-            "style": "Meet",
+            "style": "MEETUP",
             "days": {
                 "2015-05-22": [
                     { "time": "09:00", "track": "Nova" },
