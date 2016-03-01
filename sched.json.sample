@@ -5,7 +5,7 @@
     },
     "rooms": [
         {
-            "name": "Room 212",
+            "id": 40,
             "style": "FISHBOWL",
             "days": {
                 "2015-05-19": [
@@ -42,7 +42,7 @@
             }
         },
         {
-            "name": "Room 212A",
+            "id": 41,
             "style": "MEETUP",
             "days": {
                 "2015-05-22": [

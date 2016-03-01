@@ -79,6 +79,6 @@ class Command(BaseCommand):
                         title,
                         desc,
                         slot['track'],
-                        room['name'],
+                        room['id'],
                         room['style']
                     )

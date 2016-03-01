@@ -15,8 +15,10 @@ Create empty database:
 ./manage.py syncdb
 
 Copy sched.json.sample to sched.json and edit the file to match
-the tracks, trackleads and room layout you want to have. Then run:
+the tracks, trackleads and room layout you want to have. Note that
+the room "id" is an integer for Summit and a string for Sched.
 
+Then run:
 ./manage.py loadsched sched.json
 
 Then you can run a test server using:

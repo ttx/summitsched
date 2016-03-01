@@ -158,7 +158,7 @@ class API:
             "start_date": _dt_to_timestamp(day + " " + starttime),
             "end_date": _dt_to_timestamp(day + " " + endtime),
             "description": desc,
-            "location_id": int(room), # FIXME
+            "location_id": room,
             "summit_types_id":[ self.summit_type_id ],
             "tags": [ track ],
             "type_id": self.eventids[style] })
