@@ -33,6 +33,7 @@ class API:
            basescope + 'write-event',
            basescope + 'publish-event',
            basescope + 'delete-event' ]
+        self.summit_type_id = settings.SUM_SUMMITTYPEID
         self.endpoint = ( settings.SUM_RESOURCESRV +
                           '/api/v1/summits/' +
                           settings.SUM_SUMMITID + '/' )
@@ -104,10 +105,11 @@ class API:
 
     def list_sessions(self, trackid):
         t = Track.objects.get(id=trackid)
-        ret = self._call_summit('get','events',
-                                payload={ 'per_page': 100,
-                                  'filter': 'tags=@'+t.name,
-                                }, debug=True)
+        ret = self._call_summit('get','events', debug=True, payload={
+            'per_page': 100,
+            'filter': [ 'summit_type_id==%d' % self.summit_type_id,
+                'tags=@%s' % t.name ]
+             })
         sessions = []
         for sessionjson in sorted(ret['data'],
                                   key=lambda x: x['start_date']):
@@ -150,6 +152,6 @@ class API:
             "end_date": _dt_to_timestamp(day + " " + endtime),
             "description": desc,
             "location_id": int(room), # FIXME
-            "summit_types_id":[2],
+            "summit_types_id":[ self.summit_type_id ],
             "tags": [ track ],
             "type_id": self.eventids[style] })
