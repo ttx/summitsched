@@ -56,35 +56,13 @@ class API:
             session.maintrack,"")
         session.extratracks = session.extratracks.strip(" ,")
 
-        # Fishbowls keep their name, trackname is mandatory
-        if session.style == 'FISHBOWL':
-            if schedjson['name'].startswith(session.maintrack+": "):
-                session.title = schedjson['name'][len(session.maintrack+": "):]
-            else:
-                session.title = schedjson['name']
-
-        # Workrooms & meetups have a mandatory name
-        if session.style == 'WORKROOM':
-            session.title = Session.WORKROOM_TITLE % session.maintrack
-
-        if session.style == 'MEETUP':
-            session.title = Session.MEETUP_TITLE % session.maintrack
-
+        session.set_title(schedjson['name'])
         try:
-            session.description = schedjson['description'].replace(
-                '<br />', '\n')
+            session.set_desc(schedjson['description'])
         except KeyError:
             session.description = "tbd"
 
-        start = schedjson['description'].find("<a href='")
-        end = schedjson['description'].find("here</a>")
-        if start != -1 and end != -1:
-            session.urllink = schedjson['description'][start+9:end-2]
-        else:
-            session.urllink = ''
-
         return session
-
 
     def _all_sessions(self):
         ret = self._call_sched('session/list')
@@ -120,25 +98,8 @@ class API:
                 print track
                 alltracks = "%s, %s" % (alltracks, track)
 
-        # Fishbowl can specify a name
-        if session.style == 'FISHBOWL':
-            if not session.title.startswith(session.maintrack+": "):
-                name = session.maintrack + ": " + session.title
-            else:
-                name = session.title
-
-        # Workrooms have a mandatory name
-        if session.style == 'WORKROOM':
-            name = Session.WORKROOM_TITLE % session.maintrack
-
-        # Meetups have a mandatory name and description
-        if session.style == 'MEETUP':
-            name = Session.MEETUP_TITLE % session.maintrack
-            description = Session.MEETUP_DESCRIPTION % session.maintrack
-            if session.urllink:
-                description += Session.MEETUP_LINK % session.urllink
-
-        description = description.replace('\n', '<br />')
+        name = session.get_title()
+        description = session.get_desc()
 
         self._call_sched('session/mod',
                          session_key=sessionkey,

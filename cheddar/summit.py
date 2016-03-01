@@ -96,28 +96,8 @@ class API:
                 session.extratracks = session.extratracks + tag['tag'] + ", "
         session.extratracks = session.extratracks.strip(" ,")
 
-        # Fishbowls keep their name, trackname is mandatory
-        if session.style == 'FISHBOWL':
-            if sjson['title'].startswith(session.maintrack+": "):
-                session.title = sjson['title'][len(session.maintrack+": "):]
-            else:
-                session.title = sjson['title']
-
-        # Workrooms & meetups have a mandatory name
-        if session.style == 'WORKROOM':
-            session.title = Session.WORKROOM_TITLE % session.maintrack
-
-        if session.style == 'MEETUP':
-            session.title = Session.MEETUP_TITLE % session.maintrack
-
-        session.description = sjson['description']
-
-        start = sjson['description'].find("<a href='")
-        end = sjson['description'].find("here</a>")
-        if start != -1 and end != -1:
-            session.urllink = sjson['description'][start+9:end-2]
-        else:
-            session.urllink = ''
+        session.set_title(sjson['title'])
+        session.set_desc(sjson['description'])
 
         return session
 
@@ -149,23 +129,8 @@ class API:
             if is_valid_track(track):
                 alltracks.append(track)
 
-        # Fishbowl can specify a name
-        if session.style == 'FISHBOWL':
-            if not session.title.startswith(session.maintrack+": "):
-                name = session.maintrack + ": " + session.title
-            else:
-                name = session.title
-
-        # Workrooms have a mandatory name
-        if session.style == 'WORKROOM':
-            name = Session.WORKROOM_TITLE % session.maintrack
-
-        # Meetups have a mandatory name and description
-        if session.style == 'MEETUP':
-            name = Session.MEETUP_TITLE % session.maintrack
-            description = Session.MEETUP_DESCRIPTION % session.maintrack
-            if session.urllink:
-                description += Session.MEETUP_LINK % session.urllink
+        name = session.get_title()
+        description = session.get_desc()
 
         self._call_summit('put', 'events/%s' % sessionkey, payload={
                          'title': name,

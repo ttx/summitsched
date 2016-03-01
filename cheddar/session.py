@@ -39,3 +39,56 @@ class Session():
         self.urllink = formdata.get('urllink')
         self.description = formdata['description']
 
+    def set_title(self, fulltitle):
+        # Fishbowls keep their name, trackname is mandatory
+        if self.style == 'FISHBOWL':
+            if fulltitle.startswith(self.maintrack+": "):
+                self.title = fulltitle[len(self.maintrack+": "):]
+            else:
+                self.title = fulltitle
+
+        # Workrooms & meetups have a mandatory name
+        if self.style == 'WORKROOM':
+            self.title = self.WORKROOM_TITLE % self.maintrack
+
+        if self.style == 'MEETUP':
+            self.title = self.MEETUP_TITLE % self.maintrack
+
+    def set_desc(self, fulldesc):
+
+        self.description = fulldesc.replace('<br />', '\n')
+
+        start = fulldesc.find("<a href='")
+        end = fulldesc.find("here</a>")
+        if start != -1 and end != -1:
+            self.urllink = fulldesc[start+9:end-2]
+        else:
+            self.urllink = ''
+
+    def get_title(self):
+        # Fishbowl can specify a name
+        if self.style == 'FISHBOWL':
+            if not self.title.startswith(self.maintrack+": "):
+                return self.maintrack + ": " + self.title
+            else:
+                return self.title
+
+        # Workrooms have a mandatory name
+        if self.style == 'WORKROOM':
+            return self.WORKROOM_TITLE % self.maintrack
+
+        # Meetups have a mandatory name
+        if self.style == 'MEETUP':
+            return self.MEETUP_TITLE % self.maintrack
+
+    def get_desc(self):
+        desc = self.description
+        # Meetups have a mandatory description
+        if self.style == 'MEETUP':
+            desc = self.MEETUP_DESCRIPTION % self.maintrack
+            if self.urllink:
+                desc += self.MEETUP_LINK % self.urllink
+
+        desc = desc.replace('\n', '<br />')
+
+        return desc
