@@ -86,7 +86,8 @@ class API:
         session.end = _format_datetime(sjson['end_date'])
         session.room = sjson['location_id']
 
-        session.style = 'FISHBOWL' # FIXME sjson['class_name']
+        session.style = (k for k,v in self.eventids.items()
+                         if v==sjson['type_id']).next()
 
         elements = sjson['title'].split(":")
         if len(elements) < 1:
