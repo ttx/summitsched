@@ -93,8 +93,9 @@ class API:
 
         session.extratracks = ""
         for tag in sjson['tags']:
-            if tag['tag'] != session.maintrack:
-                session.extratracks = session.extratracks + tag['tag'] + ", "
+            tagname = tag['tag'].capitalize()
+            if tagname != session.maintrack:
+                session.extratracks = session.extratracks + tagname + ", "
         session.extratracks = session.extratracks.strip(" ,")
 
         session.set_title(sjson['title'])
@@ -113,7 +114,8 @@ class API:
         sessions = []
         for sessionjson in sorted(ret['data'],
                                   key=lambda x: x['start_date']):
-            sessions.append(self._summit_to_session(sessionjson))
+            if sessionjson['title'].startswith(t.name + ": "):
+                sessions.append(self._summit_to_session(sessionjson))
 
         return sessions
 
