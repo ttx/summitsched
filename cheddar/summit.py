@@ -47,6 +47,8 @@ class API:
             verify=False,
             scope=self.scopes)
         self.eventids = settings.SUM_EVENTIDS
+        # Using a custom ofset since the one stored in Summit looks incorrect
+        self.timezone_offset = settings.SUM_TZOFFSET
 
 
     def _call_summit(self, method, call, payload=None, debug=False):
@@ -76,7 +78,8 @@ class API:
         session = Session(sjson['id'])
 
         def _format_datetime(timestamp):
-            time = datetime.datetime.utcfromtimestamp(timestamp)
+            time = datetime.datetime.utcfromtimestamp(
+                timestamp + self.timezone_offset)
             return time.strftime('%Y-%m-%d %H:%M:%S')
 
         session.start = _format_datetime(sjson['start_date'])

@@ -35,6 +35,7 @@ SCHED_API_KEY = 'c1a3f10f367a3a418573fc8a10b7cdf5'
 # SUM_EVENTIDS = { 'Fish': 1,
 #                  'Work': 2,
 #                  'Meet': 3 }
+# SUM_TZOFFSET = -18000
 
 # Run in production
 DEBUG = False
