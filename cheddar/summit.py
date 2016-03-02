@@ -20,7 +20,7 @@ from cheddar.models import Track
 from cheddar.session import Session
 from cheddar.tracklead import is_valid_track
 
-from oauthlib.oauth2 import BackendApplicationClient
+from oauthlib.oauth2 import BackendApplicationClient, TokenExpiredError
 from requests_oauthlib import OAuth2Session
 
 
@@ -63,8 +63,13 @@ class API:
                          sort_keys=True, indent=4, separators=(',', ': '))
             print "--->"
 
-        r = self.oauth.request(method, self.endpoint + call,
-                               verify=False, json=payload)
+        try:
+            r = self.oauth.request(method, self.endpoint + call,
+                                   verify=False, json=payload)
+        except TokenExpiredError:
+            self._refresh_token()
+            r = self.oauth.request(method, self.endpoint + call,
+                                   verify=False, json=payload)
 
         try:
             if debug:
