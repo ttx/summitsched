@@ -84,7 +84,7 @@ class API:
 
         session.start = _format_datetime(sjson['start_date'])
         session.end = _format_datetime(sjson['end_date'])
-        session.room = sjson['location_id']
+        session.room = sjson['location']['name']
 
         session.style = (k for k,v in self.eventids.items()
                          if v==sjson['type_id']).next()
@@ -114,7 +114,8 @@ class API:
             'page': 1,
             'per_page': 100,
             'filter': [ 'summit_type_id==%d' % self.summit_type_id,
-                'tags=@%s' % t.name ]
+                'tags=@%s' % t.name ],
+            'expand': 'location'
              })
         sessions = []
         for sessionjson in sorted(ret['data'],
@@ -126,7 +127,9 @@ class API:
 
 
     def get_session(self, sessionid):
-        ret = self._call_summit('get','events/'+str(sessionid))
+        ret = self._call_summit('get','events/'+str(sessionid), payload={
+            'expand': 'location'
+            })
         return self._summit_to_session(ret)
 
 
