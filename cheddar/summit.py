@@ -56,11 +56,14 @@ class API:
             scope=self.scopes)
 
     def _call_summit(self, method, call, payload=None, debug=False):
+        def dumpjson(data):
+            print json.dumps(data, sort_keys=True, indent=4,
+                             separators=(',', ': '))
+
         if debug:
             print method, self.endpoint, call
             if payload:
-                print json.dumps(payload,
-                         sort_keys=True, indent=4, separators=(',', ': '))
+                dumpjson(payload)
             print "--->"
 
         try:
@@ -75,8 +78,7 @@ class API:
             if debug:
                 print str(r.status_code)
                 if r.text:
-                    print json.dumps(r.json(),
-                         sort_keys=True, indent=4, separators=(',', ': '))
+                    dumpjson(r.json())
                 print "==================================="
             return r.json()
         except ValueError:
