@@ -121,7 +121,7 @@ class API:
 
     def list_sessions(self, trackid):
         t = Track.objects.get(id=trackid)
-        ret = self._call_summit('get','events', debug=True, payload={
+        ret = self._call_summit('get','events', payload={
             'page': 1,
             'per_page': 100,
             'filter': [ 'summit_type_id==%d' % self.summit_type_id,
