@@ -40,16 +40,20 @@ class API:
         self.clientid = settings.SUM_CLIENTID
         self.oauth = OAuth2Session(
             client=BackendApplicationClient(client_id=self.clientid))
-        self.token = self.oauth.fetch_token(
-            token_url=settings.SUM_TOKENURL,
-            client_id=self.clientid,
-            client_secret=settings.SUM_SECRET,
-            verify=False,
-            scope=self.scopes)
+        self.tokenurl = settings.SUM_TOKENURL
+        self.secret = settings.SUM_SECRET
         self.eventids = settings.SUM_EVENTIDS
         # Using a custom ofset since the one stored in Summit looks incorrect
         self.timezone_offset = settings.SUM_TZOFFSET
+        self._refresh_token()
 
+    def _refresh_token(self):
+        self.token = self.oauth.fetch_token(
+            token_url=self.tokenurl,
+            client_id=self.clientid,
+            client_secret=self.secret,
+            verify=False,
+            scope=self.scopes)
 
     def _call_summit(self, method, call, payload=None, debug=False):
         if debug:
