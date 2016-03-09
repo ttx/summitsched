@@ -121,7 +121,7 @@ class API:
 
     def list_sessions(self, trackid):
         t = Track.objects.get(id=trackid)
-        ret = self._call_summit('get','events', payload={
+        ret = self._call_summit('get','events/published', payload={
             'page': 1,
             'per_page': 100,
             'filter': [ 'summit_type_id==%d' % self.summit_type_id,
@@ -167,7 +167,7 @@ class API:
             dt = datetime.datetime.strptime(ds, "%Y-%m-%d %H:%M")
             return int((dt - datetime.datetime(1970, 1, 1)).total_seconds())
 
-        self._call_summit('post', 'events', payload={
+        r = self._call_summit('post', 'events', payload={
             "title": title,
             "start_date": _dt_to_timestamp(day + " " + starttime),
             "end_date": _dt_to_timestamp(day + " " + endtime),
@@ -176,3 +176,6 @@ class API:
             "summit_types_id":[ self.summit_type_id ],
             "tags": [ track ],
             "type_id": self.eventids[style] })
+
+        self._call_summit('put', 'events/%d/publish' % r['id'],
+                          payload={ 'location_id': room })
