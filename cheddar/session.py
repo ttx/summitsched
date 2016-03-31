@@ -40,6 +40,7 @@ class Session():
         self.description = formdata['description']
 
     def set_title(self, fulltitle):
+        self.fulltitle = fulltitle
         # Fishbowls keep their name, trackname is mandatory
         if self.style == 'FISHBOWL':
             if fulltitle.startswith(self.maintrack+": "):

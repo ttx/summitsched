@@ -24,7 +24,7 @@
 {% if session.style == 'MEETUP' %}
 <span class="label label-success">Meetup</span>
 {% endif %}
-&nbsp;&nbsp;{{ session.title}}
+&nbsp;&nbsp;{{ session.fulltitle}}
 {% for track in session.extratracks|split_tracks %}
 {% if track != trackname %}
 <span class="badge">{{ track }}</span>
