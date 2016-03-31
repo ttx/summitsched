@@ -33,9 +33,9 @@ LINK = SCHED_SITE + '/type/%s'
 # SUM_RESOURCESRV = "https://testresource-server.openstack.org"
 # SUM_SUMMITID = "current"
 # SUM_SUMMITTYPEID = 2
-# SUM_EVENTIDS = { 'Fish': 1,
-#                  'Work': 2,
-#                  'Meet': 3 }
+# SUM_EVENTIDS = { 'FISHBOWL': 8,
+#                  'WORKROOM': 9,
+#                  'MEETUP': 10 }
 # SUM_TZOFFSET = -18000
 # LINK = 'http://www.openstack.org/summit/austin-2016/summit-schedule/global-search?t=%s%%3A'
 
