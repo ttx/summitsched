@@ -24,6 +24,7 @@ API_MODULE = "cheddar.sched"
 # API-specific parameters
 SCHED_SITE = 'kilodesignsummit.sched.org'
 SCHED_API_KEY = 'c1a3f10f367a3a418573fc8a10b7cdf5'
+LINK = SCHED_SITE + '/type/%s'
 
 # Summit API-specific parameters
 # SUM_CLIENTID = "wowsecrethere"
@@ -36,6 +37,7 @@ SCHED_API_KEY = 'c1a3f10f367a3a418573fc8a10b7cdf5'
 #                  'Work': 2,
 #                  'Meet': 3 }
 # SUM_TZOFFSET = -18000
+# LINK = 'http://www.openstack.org/summit/austin-2016/summit-schedule/global-search?t=%s%%3A'
 
 # Run in production
 DEBUG = False

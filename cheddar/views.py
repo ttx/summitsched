@@ -43,10 +43,12 @@ def index(request):
 @login_required
 @is_tracklead
 def trackindex(request, trackid):
+    trackname = get_trackname(trackid)
+    linkurl = settings.LINK % trackname
     return cheddar_render(request,
                           'cheddar/trackindex.html',
-                          viewprefix="http://%s" % settings.SCHED_SITE,
-                          trackname=get_trackname(trackid),
+                          linkurl=linkurl,
+                          trackname=trackname,
                           trackid=int(trackid),
                           session_list=api.list_sessions(trackid))
 
