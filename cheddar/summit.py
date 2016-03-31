@@ -109,7 +109,7 @@ class API:
         session.extratracks = ""
         for tag in sjson['tags']:
             tagname = tag['tag'].capitalize()
-            if tagname != session.maintrack:
+            if tagname.lower() != session.maintrack.lower():
                 session.extratracks = session.extratracks + tagname + ", "
         session.extratracks = session.extratracks.strip(" ,")
 
