@@ -23,7 +23,7 @@ class Session():
     WORKROOM_LINK = (
     "\nClick <a href='%s'>here</a> for details on this work room agenda.")
 
-    MEETUP_TITLE = "%s contributors meetup"
+    MEETUP_TITLE = "%s: Contributors meetup"
     MEETUP_DESCRIPTION = (
     "The %s contributors meetup is a informal gathering of "
     "the project contributors, with an open agenda.\n")
