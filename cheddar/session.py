@@ -45,7 +45,15 @@ class Session():
         if self.style == 'FISHBOWL':
             if fulltitle.startswith(self.maintrack+": "):
                 self.title = fulltitle[len(self.maintrack+": "):]
-        self.title = fulltitle
+            else:
+                self.title = fulltitle
+
+        # Workrooms & meetups have a mandatory name
+        if self.style == 'WORKROOM':
+            self.title = self.WORKROOM_TITLE % self.maintrack
+
+        if self.style == 'MEETUP':
+            self.title = self.MEETUP_TITLE % self.maintrack
 
     def set_desc(self, fulldesc):
 
@@ -63,7 +71,16 @@ class Session():
         if self.style == 'FISHBOWL':
             if not self.title.startswith(self.maintrack+": "):
                 return self.maintrack + ": " + self.title
-        return self.title
+            else:
+                return self.title
+
+        # Workrooms have a mandatory name
+        if self.style == 'WORKROOM':
+            return self.WORKROOM_TITLE % self.maintrack
+
+        # Meetups have a mandatory name
+        if self.style == 'MEETUP':
+            return self.MEETUP_TITLE % self.maintrack
 
     def get_desc(self):
         desc = self.description
