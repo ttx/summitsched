@@ -44,7 +44,7 @@ def index(request):
 @is_tracklead
 def trackindex(request, trackid):
     trackname = get_trackname(trackid)
-    linkurl = settings.LINK % trackname
+    linkurl = settings.TRACKLINK % trackname
     return cheddar_render(request,
                           'cheddar/trackindex.html',
                           linkurl=linkurl,
@@ -60,10 +60,11 @@ def editsession(request, trackid, sessionkey):
         session = api.get_session(sessionkey)
     except IndexError:
         return page_not_found(request)
+    linkurl = settings.SESSIONLINK % sessionkey
     return cheddar_render(
         request,
         'cheddar/editsession.html',
-        viewprefix="http://%s" % settings.SCHED_SITE,
+        linkurl=linkurl,
         trackname=get_trackname(trackid),
         trackid=int(trackid),
         extratracks=extra_tracks(int(trackid)),
