@@ -41,5 +41,5 @@ def is_tracklead(func):
     return wrapper
 
 def is_valid_track(trackname):
-    tracks = Track.objects.filter(name=trackname)
+    tracks = Track.objects.filter(name__iexact=trackname)
     return len(tracks) == 1

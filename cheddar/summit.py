@@ -108,7 +108,7 @@ class API:
 
         session.extratracks = ""
         for tag in sjson['tags']:
-            tagname = tag['tag'].capitalize()
+            tagname = tag['tag']
             if tagname.lower() != session.maintrack.lower():
                 session.extratracks = session.extratracks + tagname + ", "
         session.extratracks = session.extratracks.strip(" ,")
@@ -148,7 +148,7 @@ class API:
         alltracks = [ session.maintrack ]
         description = session.description
         for track in session.extratracks.split(","):
-            track = track.strip().capitalize()
+            track = track.strip()
             if is_valid_track(track):
                 alltracks.append(track)
 
