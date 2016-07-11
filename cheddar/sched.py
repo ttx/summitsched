@@ -108,6 +108,9 @@ class API:
                          description=description,
                          venue=old_session.room)
 
+    def swap_sessions(self, sessionkey, session, session2key, session2):
+        self.modify_session(sessionkey, session2)
+        self.modify_session(session2key, session)
 
     def create_session(self, index, day, starttime, endtime, title,
                        desc, track, room, style):

@@ -71,10 +71,21 @@ def editsession(request, trackid, sessionkey):
         session=session)
 
 
+@login_required
+@is_tracklead
 def modifysession(request, trackid, sessionkey):
     session = api.get_session(sessionkey)
     session.modify_using_formdata(request.POST)
     api.modify_session(sessionkey, session)
+    return HttpResponseRedirect('/cheddar/%s' % trackid)
+
+
+@login_required
+@is_tracklead
+def swapsession(request, trackid, sessionkey, session2key):
+    session = api.get_session(sessionkey)
+    session2 = api.get_session(session2key)
+    api.swap_sessions(sessionkey, session, session2key, session2)
     return HttpResponseRedirect('/cheddar/%s' % trackid)
 
 

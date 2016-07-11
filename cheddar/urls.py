@@ -22,6 +22,7 @@ urlpatterns = patterns(
     url(r'^$', views.index, name='index'),
     url(r'^(\d+)$', views.trackindex),
     url(r'^(\d+)/edit/(.+)$', views.modifysession),
+    url(r'^(\d+)/swap/(.+)/(.+)$', views.swapsession),
     url(r'^(\d+)/(.+)$', views.editsession),
     url(r'^logout$', views.dologout),
     url(r'^loggedout$', views.loggedout),

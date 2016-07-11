@@ -1,6 +1,37 @@
 {% extends "cheddar/base.html" %}
 {% load trackextras %}
 {% block content %}
+<script language="JavaScript">
+function dragstart_handler(ev, sessionstyle) {
+ ev.dataTransfer.setData("sessionid", ev.target.id);
+ ev.dataTransfer.setData("sessionstyle", sessionstyle);
+ 
+ ev.dataTransfer.dropEffect = "link";
+}
+
+function dragover_handler(ev) {
+ ev.preventDefault();
+}
+
+function drop_handler(ev, sessionstyle) {
+ ev.preventDefault();
+ var data = ev.dataTransfer.getData("sessionid");
+ if (data == ev.target.id) {
+  // We are dropping over ourselves, let's ignore that
+  return true;
+ }
+ var oldsessionstyle = ev.dataTransfer.getData("sessionstyle");
+ if (sessionstyle != oldsessionstyle) {
+  alert("You can't swap content from a "+oldsessionstyle+
+        " to a "+sessionstyle+" !");
+  return true;
+ }
+ console.log("dropped "+ data + " over " + ev.target.id);
+ if (window.confirm("Are you sure you want to swap the content between those two sessions ?")) { 
+   window.location.href="/cheddar/{{trackid}}/swap/"+data+"/"+ev.target.id;
+ }
+}
+</script>
 <ul class="list-group">
   <li class="list-group-item disabled"><h4>{{ trackname }} track</h4></li>
 {% for session in session_list %}
@@ -11,7 +42,7 @@
 <span class="glyphicon glyphicon-calendar"></span>
 {{ session.start|slice:":10" }}</li>
 {% endifchanged %}
-<a href="/cheddar/{{trackid}}/{{ session.id }}" class="list-group-item">
+<a id='{{ session.id }}' href="/cheddar/{{trackid}}/{{ session.id }}" class="list-group-item"  ondragstart="dragstart_handler(event, '{{ session.style }}');" draggable="true" ondrop="drop_handler(event, '{{ session.style }}');" ondragover="dragover_handler(event);">
 {{ session.start|slice:"-8:-3" }} - {{ session.end|slice:"-8:-3" }}
 &nbsp;&nbsp;({{ session.room }})
 &nbsp;
