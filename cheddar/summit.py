@@ -172,7 +172,7 @@ class API:
             dt = datetime.datetime.strptime(ds, "%Y-%m-%d %H:%M")
             return int((dt - datetime.datetime(1970, 1, 1)).total_seconds())
 
-        r = self._call_summit('post', 'events', payload={
+        r = self._call_summit('post', 'events', debug=True, payload={
             "title": title,
             "start_date": _dt_to_timestamp(day + " " + starttime),
             "end_date": _dt_to_timestamp(day + " " + endtime),
@@ -182,5 +182,5 @@ class API:
             "tags": [ track ],
             "type_id": self.eventids[style] })
 
-        self._call_summit('put', 'events/%d/publish' % r['id'],
+        self._call_summit('put', 'events/%d/publish' % r['id'], debug=True,
                           payload={ 'location_id': room })
